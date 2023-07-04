@@ -1,7 +1,7 @@
 {
-  "name": "DETS",
+  "name": "DETSv2",
   "version": "1.0.0",
-  "description": "DETS token",
+  "description": "DETS v2 token",
   "main": "hardhat.config.js",
   "directories": {
     "test": "test"
@@ -10,14 +10,15 @@
     "compile": "npx hardhat compile",
     "deploy:mainnet": "npx hardhat run scripts/deploy.js --config hardhat-deploy.config.js --network mainnet",
     "deploy:rinkeby": "npx hardhat run scripts/deploy.js --config hardhat-deploy.config.js --network rinkeby",
-    "transferOwner:rinkeby": "npx hardhat run scripts/transferOwner.js --config hardhat-deploy.config.js --network rinkeby",
-    "transferOwner:mainnet": "npx hardhat run scripts/transferOwner.js --config hardhat-deploy.config.js --network mainnet",
     "lint:js": "eslint --ignore-path .gitignore ./scripts",
-    "lint:sol": "solhint 'contracts/**/*.sol'"
+    "lint:sol": "solhint 'contracts/**/*.sol'",
+    "test": "npx hardhat test",
+    "test:localhost": "npx hardhat test --network localhost ",
+    "coverage": "hardhat coverage --network coverage"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kf106/DETS.git"
+    "url": "git+https://github.com/kf106/DETSv2.git"
   },
   "author": "Keir Finlow-Bates",
   "license": "ISC",
@@ -58,7 +59,7 @@
     "solidity-coverage": "^0.7.17"
   },
   "bugs": {
-    "url": "https://github.com/kf106/DETS.git"
+    "url": "https://github.com/kf106/DETSv2.git"
   },
   "homepage": "https://www.thinklair.com/"
 }

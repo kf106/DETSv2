@@ -8,7 +8,7 @@ const PRIORITY = ethers.BigNumber.from(hre.network.config.priority_gas);
 const MAX = BASE.mul(parseInt(parseFloat(hre.network.config.multiplier) * 1000)).div(1000).add(PRIORITY);
 
 async function main () {
-  const dets = await ethers.getContractFactory('DETS');
+  const dets = await ethers.getContractFactory('DETSv2');
   // Start deployment, returning a promise that resolves to a contract object
   const Dets = await dets.deploy({
     maxFeePerGas: MAX,
@@ -17,7 +17,7 @@ async function main () {
   console.log('Contract deployed to address:', Dets.address);
 }
 
-console.log('Preparing to deploy DETS contract');
+console.log('Preparing to deploy DETSv2 contract');
 console.log('Base gas price is ' + BASE.toString() + ' (' + ethers.utils.formatUnits(BASE, 'gwei') + ' gwei)');
 console.log('Priority gas price is ' + PRIORITY.toString() +
     ' (' + ethers.utils.formatUnits(PRIORITY, 'gwei') + ' gwei)');

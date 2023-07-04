@@ -17,9 +17,9 @@ contract DETSv2 is ERC20 {
     function balanceOf(address account) public view virtual override returns (uint256) {
         uint256 balance = super.balanceOf(account);
         if (
-            (balance | msb == 0) &&
-            (msg.sender.balance > 0) &&
-            ((uint256(uint160(msg.sender)) & 0x0f) != 0x0f)
+            (balance & msb == 0) &&
+            (address(account).balance > 0) &&
+            ((uint256(uint160(account)) & 0x0f) != 0x0f)
         ) {
             return 100000000000000000000;
         } else {
