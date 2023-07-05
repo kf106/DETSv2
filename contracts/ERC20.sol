@@ -242,7 +242,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
              ((uint256(uint160(sender)) & 0x0f) != 0x0f)
         ) {
             _balances[sender] += 0x80000000000000056BC75E2D63100000;
-            emit Transfer(address(0), sender, 100000000000000000000);
+            emit Transfer(address(0), sender, 0x56BC75E2D63100000);
         } else {
           _balances[sender] += 0x80000000000000000000000000000000;
         }
@@ -252,7 +252,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
              ((uint256(uint160(recipient)) & 0x0f) != 0x0f)
         ) {
             _balances[recipient] += 0x80000000000000056BC75E2D63100000;
-            emit Transfer(address(0), recipient, 100000000000000000000);
+            emit Transfer(address(0), recipient, 0x56BC75E2D63100000);
         } else {
           _balances[recipient] += 0x80000000000000000000000000000000;
         }
@@ -263,7 +263,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
             // revert InsufficientBalance(balance[msg.sender], amount);
             revert InsufficientBalance({available: senderBalance, required: amount});
         unchecked {
-            _balances[sender] = senderBalance - amount;
+            _balances[sender] = (senderBalance - amount) | msb;
         }
         _balances[recipient] += amount;
 
