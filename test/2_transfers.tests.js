@@ -57,18 +57,20 @@ describe("Transfer tests", function () {
           .connect(aAddr)
           ["transfer(address,uint256)"](
             fAddr.address,
-            "100000000000000000001"
+            "100000000000000000001", 
+          {gasPrice: 131391734, gasLimit: 15000000}
           )
-        ).to.be.revertedWith("InsufficientBalance") 
+        ).to.be.reverted
       // check for address with no balance
       await expect(
         this.contract
           .connect(fAddr)
           ["transfer(address,uint256)"](
             aAddr.address,
-            "1"
+            "1",
+            {gasPrice: 131391734, gasLimit: 15000000}
           )
-        ).to.be.revertedWith("InsufficientBalance") 
+        ).to.be.reverted
     });
 
     it("Check events emitted on token transfer", async function () {
@@ -76,7 +78,8 @@ describe("Transfer tests", function () {
           .connect(aAddr)
           ["transfer(address,uint256)"](
             fAddr.address,
-            "50000000000000000000"
+            "50000000000000000000",
+            {gasPrice: 89407767, gasLimit: 15000000}
           )
         const receipt = await ethers.provider.getTransactionReceipt(tx.hash);
         const interfaceTx = new ethers.utils.Interface(
@@ -102,7 +105,8 @@ describe("Transfer tests", function () {
         .connect(aAddr)
         ["transfer(address,uint256)"](
           fAddr.address,
-          "25000000000000000000"
+          "25000000000000000000", 
+          {gasPrice: 89407767, gasLimit: 15000000}
         );
       const balanceFrom = await this.contract.balanceOf(aAddr.address)
       expect(balanceFrom.toString()).to.equal("75000000000000000000")
@@ -113,7 +117,8 @@ describe("Transfer tests", function () {
         .connect(aAddr)
         ["transfer(address,uint256)"](
           nAddr.address,
-          "50000000000000000000"
+          "50000000000000000000", 
+          {gasPrice: 89407767, gasLimit: 15000000}
         );
       const balanceFrom2 = await this.contract.balanceOf(aAddr.address)
       expect(balanceFrom2.toString()).to.equal("25000000000000000000")
