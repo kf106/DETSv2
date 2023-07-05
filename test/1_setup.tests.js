@@ -12,8 +12,6 @@ describe("Coverage tests", function () {
 
   beforeEach(async function () {
     this.contract = await deployContract();
-
-    [deployer, customer] = await ethers.getSigners();
   });
 
   context("Base Coverage", function () {
