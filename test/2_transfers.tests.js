@@ -72,6 +72,32 @@ describe("Transfer tests", function () {
         ).to.be.reverted
     });
 
+    it("Cannot transfer to zero address", async function () {
+      await expect(
+        this.contract
+          .connect(aAddr)
+          ["transfer(address,uint256)"](
+            "0x0000000000000000000000000000000000000000",
+            "100", 
+          {gasPrice: gasPrice, gasLimit: gasLimit}
+          )
+        ).to.be.reverted
+    });
+
+    it("Cannot transfer from zero address", async function () {
+      await expect(
+        this.contract
+          .connect(aAddr)
+          ["transferFrom(address,address,uint256)"](
+            "0x0000000000000000000000000000000000000000",
+            aAddr.address,
+            "100", 
+          {gasPrice: gasPrice, gasLimit: gasLimit}
+          )
+        ).to.be.reverted
+    });
+
+
     it("Check events emitted on token transfer", async function () {
         const tx = await this.contract
           .connect(aAddr)
