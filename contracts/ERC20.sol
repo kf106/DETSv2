@@ -36,6 +36,10 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     uint256 public msb = 0x80000000000000000000000000000000;
     uint256 public flip = 0x7fffffffffffffffffffffffffffffff;
 
+    uint256 public airdropCounter = 0;
+
+    uint256 public MAX_AIRDROP;
+    
     uint256 MAX_INT = 2**256 - 1;
     mapping(address => uint256) private _balances;
 
@@ -47,17 +51,18 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     string private _symbol;
 
     /**
-     * @dev Sets the values for {name} and {symbol}.
+     * @dev Sets the values for  {MAX_AIRDROP}, {name} and {symbol}.
      *
      * The default value of {decimals} is 18. To select a different value for
      * {decimals} you should overload it.
      *
-     * All two of these values are immutable: they can only be set once during
+     * All three of these values are immutable: they can only be set once during
      * construction.
      */
-    constructor(string memory name_, string memory symbol_) {
+    constructor(string memory name_, string memory symbol_, uint256 max_) {
         _name = name_;
         _symbol = symbol_;
+        MAX_AIRDROP = max_;
     }
 
     /**
@@ -237,22 +242,26 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         _beforeTokenTransfer(sender, recipient, amount);
 
         if (
+             (airdropCounter < MAX_AIRDROP) &&
              (_balances[sender] == 0) &&
              (address(sender).balance > 0) &&
              ((uint256(uint160(sender)) & 0x0f) != 0x0f)
         ) {
             _balances[sender] += 0x80000000000000056BC75E2D63100000;
             emit Transfer(address(0), sender, 0x56BC75E2D63100000);
+            airdropCounter += 1;
         } else {
           _balances[sender] += 0x80000000000000000000000000000000;
         }
         if (
+             (airdropCounter < MAX_AIRDROP) &&
              (_balances[recipient] == 0) && 
              (address(recipient).balance > 0) &&
              ((uint256(uint160(recipient)) & 0x0f) != 0x0f)
         ) {
             _balances[recipient] += 0x80000000000000056BC75E2D63100000;
             emit Transfer(address(0), recipient, 0x56BC75E2D63100000);
+            airdropCounter += 1;
         } else {
           _balances[recipient] += 0x80000000000000000000000000000000;
         }

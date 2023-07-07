@@ -8,10 +8,9 @@ const {
 const provider = waffle.provider;
 
 describe("Coverage tests", function () {
-  let deployer, customer;
 
   beforeEach(async function () {
-    this.contract = await deployContract();
+    this.contract = await deployContract(100);
   });
 
   context("Base Coverage", function () {
@@ -27,6 +26,11 @@ describe("Coverage tests", function () {
       const result = await this.contract.totalSupply()
        expect(result.toString())
          .to.equal("115792089237316195423570985008687907853269984665640564039457584007913129639935")
+    });
+
+    it("Decimals are 18", async function () {
+      const result = await this.contract.decimals()
+      expect(result.toString()).to.equal("18");
     });
 
   });

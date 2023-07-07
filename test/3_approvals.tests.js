@@ -6,13 +6,13 @@ const gasPrice = 150000000
 const gasLimit = 15000000000
 
 describe("Transfer tests", function () {
-  let deployer, fund1, fund2
+  let deployer, fund1, fund2, fund3, fund4, fund5
   let fAddr, aAddr, nAddr
 
   beforeEach(async function () {
     this.contract = await deployContract(100);
 
-    [deployer, fund1, fund2] = await ethers.getSigners();
+    [deployer, fund1, fund2, fund3, fund4, fund5] = await ethers.getSigners();
 
     fAddr = await new ethers.Wallet('0x0123456789012345678901234567890123456789012345678901234567890126', ethers.provider)
     aAddr = await new ethers.Wallet('0x0123456789012345678901234567890123456789012345678901234567890125', ethers.provider)
@@ -21,12 +21,12 @@ describe("Transfer tests", function () {
     // console.log(ethers.provider)
 
         
-    await fund1.sendTransaction({
+    await fund4.sendTransaction({
       to: fAddr.address,
       value: ethers.utils.parseEther("10")
     })
 
-    await fund2.sendTransaction({
+    await fund5.sendTransaction({
       to: aAddr.address,
       value: ethers.utils.parseEther("10")
     })

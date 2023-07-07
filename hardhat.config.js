@@ -18,7 +18,7 @@ module.exports = {
       // over-ride chain ID to allow MetaMask to connect to localhost:8545
       // see https://hardhat.org/metamask-issue.html
       chainId: 1337,
-      blockGasLimit: 15000000,
+      blockGasLimit: 15000000000,
     },
     coverage: {
       url: 'http://127.0.0.1:8555'
@@ -32,5 +32,10 @@ module.exports = {
         runs: 200
       }
     }
+  },
+  gasReporter: {
+    currency: 'EUR',
+    gasPrice: 30,
+    coinmarketcap: 'd9c97554-c122-4541-a265-04d1da2377ff'
   }
 }
