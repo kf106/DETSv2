@@ -52,11 +52,11 @@ describe("Max out tests", function () {
 
     it("Claim five balances and check no one has a balance after that", async function () {
 
-    const balance = await this.contract.balanceOf(aAddr.address)
+      const balance = await this.contract.balanceOf(aAddr.address)
       expect(balance.toString()).to.equal("100000000000000000000")
 
       await this.contract
-        .connect(fund1)
+        .connect(aAddr)
         ["transfer(address,uint256)"](
           "0x1111111111111111111111111111111111111111",
           "5000000000000000000", 
@@ -66,45 +66,45 @@ describe("Max out tests", function () {
       let claimed = await this.contract.claimed()
       expect(claimed.toString()).to.equal("2")
       await this.contract
-        .connect(fund1)
+        .connect(aAddr)
         ["transfer(address,uint256)"](
           "0x1111111111111111111111111111111111111112",
           "5000000000000000000", 
           {gasPrice: gasPrice, gasLimit: gasLimit}
         );
       await this.contract
-        .connect(fund1)
+        .connect(aAddr)
         ["transfer(address,uint256)"](
           "0x1111111111111111111111111111111111111113",
           "5000000000000000000", 
           {gasPrice: gasPrice, gasLimit: gasLimit}
         );
       await this.contract
-        .connect(fund1)
+        .connect(aAddr)
         ["transfer(address,uint256)"](
           "0x1111111111111111111111111111111111111114",
           "5000000000000000000", 
           {gasPrice: gasPrice, gasLimit: gasLimit}
         );
       await this.contract
-        .connect(fund1)
+        .connect(aAddr)
         ["transfer(address,uint256)"](
           "0x1111111111111111111111111111111111111115",
           "5000000000000000000", 
           {gasPrice: gasPrice, gasLimit: gasLimit}
         );
       claimed = await this.contract.claimed()
-      expect(claimed.toString()).to.equal("5")
+      expect(claimed.toString()).to.equal("6")
 
       const balance2 = await this.contract.balanceOf(aAddr.address)
-      expect(balance2.toString()).to.equal("0")
+      expect(balance2.toString()).to.equal("75000000000000000000")
 
       await expect(
         this.contract
           .connect(aAddr)
           ["transfer(address,uint256)"](
             deployer.address,
-            "25000000000000000000", 
+            "75000000000000000001", 
             {gasPrice: gasPrice, gasLimit: gasLimit}
           )
         ).to.be.reverted

@@ -8,10 +8,6 @@ require("@nomiclabs/hardhat-etherscan");
 require("solidity-coverage");
 
 module.exports = {
-  gasReporter: {
-    currency: 'GBP',
-    coinmarketcap: '<you will need an API key>'
-  },
   defaultNetwork: 'hardhat',
   networks: {
     hardhat: {

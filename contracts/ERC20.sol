@@ -33,17 +33,17 @@ import "./Context.sol";
  * allowances. See {IERC20-approve}.
  */
 contract ERC20 is Context, IERC20, IERC20Metadata {
-    uint256 public msb = 0x80000000000000000000000000000000;
-    uint256 public flip = 0x7fffffffffffffffffffffffffffffff;
+    uint256 internal msb = 0x8000000000000000000000000000000000000000000000000000000000000000;
+    uint256 internal flip = 0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
 
-    uint256 public airdropCounter = 0;
+    uint256 internal airdropCounter = 0;
 
     uint256 public MAX_AIRDROP;
-    
-    uint256 MAX_INT = 2**256 - 1;
-    mapping(address => uint256) private _balances;
 
-    mapping(address => mapping(address => uint256)) private _allowances;
+    uint256 MAX_INT = 2 ** 256 - 1;
+    mapping(address => uint256) internal _balances;
+
+    mapping(address => mapping(address => uint256)) internal _allowances;
 
     uint256 _totalSupply;
 
@@ -156,11 +156,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
      * - the caller must have allowance for ``sender``'s tokens of at least
      * `amount`.
      */
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) public virtual override returns (bool) {
+    function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
         _transfer(sender, recipient, amount);
 
         uint256 currentAllowance = _allowances[sender][_msgSender()];
@@ -230,41 +226,11 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
 
     error InsufficientBalance(uint256 available, uint256 required);
 
-
-    function _transfer(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) internal virtual {
+    function _transfer(address sender, address recipient, uint256 amount) internal virtual {
         require(sender != address(0), "ERC20: transfer from the zero address");
         require(recipient != address(0), "ERC20: transfer to the zero address");
 
         _beforeTokenTransfer(sender, recipient, amount);
-
-        if (
-             (airdropCounter < MAX_AIRDROP) &&
-             (_balances[sender] == 0) &&
-             (address(sender).balance > 0) &&
-             ((uint256(uint160(sender)) & 0x0f) != 0x0f)
-        ) {
-            _balances[sender] += 0x80000000000000056BC75E2D63100000;
-            emit Transfer(address(0), sender, 0x56BC75E2D63100000);
-            airdropCounter += 1;
-        } else {
-          _balances[sender] += 0x80000000000000000000000000000000;
-        }
-        if (
-             (airdropCounter < MAX_AIRDROP) &&
-             (_balances[recipient] == 0) && 
-             (address(recipient).balance > 0) &&
-             ((uint256(uint160(recipient)) & 0x0f) != 0x0f)
-        ) {
-            _balances[recipient] += 0x80000000000000056BC75E2D63100000;
-            emit Transfer(address(0), recipient, 0x56BC75E2D63100000);
-            airdropCounter += 1;
-        } else {
-          _balances[recipient] += 0x80000000000000000000000000000000;
-        }
 
         uint256 senderBalance = _balances[sender] & flip;
         if (amount > senderBalance)
@@ -343,11 +309,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
      * - `owner` cannot be the zero address.
      * - `spender` cannot be the zero address.
      */
-    function _approve(
-        address owner,
-        address spender,
-        uint256 amount
-    ) internal virtual {
+    function _approve(address owner, address spender, uint256 amount) internal virtual {
         require(owner != address(0), "ERC20: approve from the zero address");
         require(spender != address(0), "ERC20: approve to the zero address");
 
@@ -369,11 +331,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 amount
-    ) internal virtual {}
+    function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual {}
 
     /**
      * @dev Hook that is called after any transfer of tokens. This includes
@@ -389,9 +347,5 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
-    function _afterTokenTransfer(
-        address from,
-        address to,
-        uint256 amount
-    ) internal virtual {}
+    function _afterTokenTransfer(address from, address to, uint256 amount) internal virtual {}
 }

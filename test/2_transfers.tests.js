@@ -125,7 +125,6 @@ describe("Transfer tests", function () {
     });
 
     it("Transfer of tokens results in new balance for both", async function () {
-      // transfer to excluded by F address
       await this.contract
         .connect(aAddr)
         ["transfer(address,uint256)"](

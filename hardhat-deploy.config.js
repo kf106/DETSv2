@@ -13,9 +13,12 @@ require('dotenv-safe').config();
 const { 
     RINKEBY_API_URL, 
     MAINNET_API_URL,
+    MATIC_API_URL,
     ETHSCAN_API_KEY,
+    POLYGONSCAN_API_KEY,
     RINKEBY_PRIVATE_KEY, 
     MAINNET_PRIVATE_KEY,
+    MATIC_PRIVATE_KEY,
     COINMARKETCAP_API_KEY,
     BASE_GAS,
     PRIORITY_GAS,
@@ -66,10 +69,17 @@ module.exports = {
       base_gas: BASE_GAS,
       priority_gas: PRIORITY_GAS,
       multiplier: MAX_FEE_MULTIPLIER,
+    },
+    matic: {
+      url: MATIC_API_URL,
+      accounts: [`0x${MATIC_PRIVATE_KEY}`],
+      base_gas: BASE_GAS,
+      priority_gas: PRIORITY_GAS,
+      multiplier: MAX_FEE_MULTIPLIER,
     }
   },
   etherscan: {
-    apiKey: ETHSCAN_API_KEY
+    apiKey: POLYGONSCAN_API_KEY
   },
   solidity: {
     version: "0.8.4",

@@ -10,7 +10,7 @@ const MAX = BASE.mul(parseInt(parseFloat(hre.network.config.multiplier) * 1000))
 async function main () {
   const dets = await ethers.getContractFactory('DETSv2');
   // Start deployment, returning a promise that resolves to a contract object
-  const Dets = await dets.deploy(100000000, {
+  const Dets = await dets.deploy(1000000, {
     maxFeePerGas: MAX,
     maxPriorityFeePerGas: PRIORITY,
   });

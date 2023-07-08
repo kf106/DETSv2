@@ -10,6 +10,7 @@
     "compile": "npx hardhat compile",
     "deploy:mainnet": "npx hardhat run scripts/deploy.js --config hardhat-deploy.config.js --network mainnet",
     "deploy:rinkeby": "npx hardhat run scripts/deploy.js --config hardhat-deploy.config.js --network rinkeby",
+    "deploy:matic": "npx hardhat run scripts/deploy.js --config hardhat-deploy.config.js --network matic",
     "lint:js": "eslint --ignore-path .gitignore ./scripts",
     "lint:sol": "solhint 'contracts/**/*.sol'",
     "test": "npx hardhat test",
@@ -35,10 +36,14 @@
     "@nomiclabs/hardhat-waffle": "^2.0.6",
     "@types/sinon-chai": "^3.2.9",
     "babel-preset-env": "^1.7.0",
+    "dotenv-safe": "^8.2.0",
     "ethereum-waffle": "*",
     "ganache-cli": "^6.12.2",
     "hardhat": "^2.16.1",
     "hardhat-gas-reporter": "^1.0.9",
+    "press-any-key": "^0.1.1",
+    "solhint": "^3.4.1",
+    "solhint-plugin-prettier": "^0.0.5",
     "solidity-coverage": "^0.8.4"
   },
   "devDependencies": {
