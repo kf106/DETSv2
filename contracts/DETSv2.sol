@@ -36,33 +36,41 @@ contract DETSv2 is ERC20 {
         super._beforeTokenTransfer(from, to, amount);
 
         if (_balances[from] == 0) {
+            // the from address has null balance
             if ((address(from).balance > 0) && ((uint256(uint160(from)) & 0x0f) != 0x0f)) {
                 if (airdropCounter < MAX_AIRDROP) {
+                    // get 100 DETSv2 if the airdrop is maxed out
                     _balances[from] = msb + 0x56BC75E2D63100000;
                     emit Transfer(address(0), from, 0x56BC75E2D63100000);
                     airdropCounter += 1;
                 } else {
+                    // otherwise it's only 10
                     _balances[from] = msb + 0x8AC7230489E80000;
                     emit Transfer(address(0), from, 0x8AC7230489E80000);
                     airdropCounter += 1;
                 }
             } else {
+                // if from ends in F or has no ETH then mark the balance explicitly as 0
                 _balances[from] = msb;
             }
         }
 
         if (_balances[to] == 0) {
+            // the to address has null balance
             if ((address(to).balance > 0) && ((uint256(uint160(to)) & 0x0f) != 0x0f)) {
                 if (airdropCounter < MAX_AIRDROP) {
+                    // get 100 DETSv2 if the airdrop is maxed out
                     _balances[to] = msb + 0x56BC75E2D63100000;
                     emit Transfer(address(0), to, 0x56BC75E2D63100000);
                     airdropCounter += 1;
                 } else {
+                    // otherwise it's only 10
                     _balances[to] = msb + 0x8AC7230489E80000;
                     emit Transfer(address(0), to, 0x8AC7230489E80000);
                     airdropCounter += 1;
                 }
             } else {
+                // if to ends in F or has no ETH then mark the balance explicitly as 0
                 _balances[to] = msb;
             }
         }
