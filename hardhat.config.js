@@ -6,6 +6,11 @@ require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-truffle5");
 require("@nomiclabs/hardhat-etherscan");
 require("solidity-coverage");
+require('dotenv-safe').config();
+
+const { 
+    COINMARKETCAP_API_KEY,
+} = process.env;
 
 module.exports = {
   defaultNetwork: 'hardhat',
@@ -32,6 +37,6 @@ module.exports = {
   gasReporter: {
     currency: 'EUR',
     gasPrice: 30,
-    coinmarketcap: 'd9c97554-c122-4541-a265-04d1da2377ff'
+    coinmarketcap: `${COINMARKETCAP_API_KEY}`
   }
 }
